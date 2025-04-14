@@ -1,11 +1,13 @@
 <script>
-  const NUM_IMAGES = 20;
+  const NUM_IMAGES = 30;
+  let clickCount = 0;
+  let showJumpscare = false;
 
   let images = Array.from({ length: NUM_IMAGES }, () => ({
     x: Math.random() * window.innerWidth,
     y: Math.random() * window.innerHeight,
     z: Math.random() * -1000 - 200,
-    size: Math.random() * 150 + 120,
+    size: Math.random() * 150 + 150,
     angle: Math.random() * 360,
     speed: Math.random() * 0.5 + 0.2,
     rotationSpeed: Math.random() * 2 - 1
@@ -21,7 +23,7 @@
           x: Math.random() * window.innerWidth,
           y: Math.random() * window.innerHeight,
           z: -1000,
-          size: Math.random() * 150 + 50,
+          size: Math.random() * 150 + 220,
           speed: Math.random() * 0.5 + 0.2,
           rotationSpeed: Math.random() * 2 - 1,
           angle: Math.random() * 360
@@ -39,6 +41,17 @@
   };
 
   animate();
+
+  const handleClick = () => {
+    clickCount += 1;
+    if (clickCount === 10) {
+      showJumpscare = true;
+      setTimeout(() => {
+        showJumpscare = false;
+        clickCount = 0; // Reset counter so it can happen again
+      }, 2000);
+    }
+  };
 </script>
 
 <style>
@@ -77,11 +90,11 @@
   .scene {
     position: absolute;
     top: 0;
-    left: -500px;
-    width: 200vw;
+    left: 0;
+    width: 100vw;
     height: 100vh;
     perspective: 1000px;
-    perspective-origin: left center; /* 💥 key change */
+    perspective-origin: left center;
     overflow: hidden;
   }
 
@@ -90,9 +103,54 @@
     transform-style: preserve-3d;
     will-change: transform;
   }
+
+  .jumpscare {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    animation: jumpscareIn 0.4s ease-out forwards;
+    transform: scale(3); /* Start at 3x size */
+    user-select: none; /* Prevent the image from being selected */
+  }
+
+  .jumpscare img {
+    max-width: 300%;
+    max-height: 300%;
+  }
+
+  @keyframes jumpscareIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes pulseZoom {
+    0% {
+      transform: scale(0.2) rotate(0deg);
+    }
+    20% {
+      transform: scale(1.1) rotate(2deg);
+    }
+    50% {
+      transform: scale(1.3) rotate(-2deg);
+    }
+    100% {
+      transform: scale(1) rotate(0deg);
+    }
+  }
 </style>
 
-<div class="scene">
+<div class="scene" on:click={handleClick}>
   {#each images as img (img)}
     <img
       class="floating-img"
@@ -106,4 +164,10 @@
       "
     />
   {/each}
+
+  {#if showJumpscare}
+    <div class="jumpscare">
+      <img src="/jumpscare.png" alt="BOO!" />
+    </div>
+  {/if}
 </div>
