@@ -7,7 +7,7 @@
     x: Math.random() * window.innerWidth,
     y: Math.random() * window.innerHeight,
     z: Math.random() * -1000 - 200,
-    size: Math.random() * 150 + 150,
+    size: Math.random() * 250 + 150,
     angle: Math.random() * 360,
     speed: Math.random() * 0.5 + 0.2,
     rotationSpeed: Math.random() * 2 - 1
@@ -23,7 +23,7 @@
           x: Math.random() * window.innerWidth,
           y: Math.random() * window.innerHeight,
           z: -1000,
-          size: Math.random() * 150 + 220,
+          size: Math.random() * 250 + 220,
           speed: Math.random() * 0.5 + 0.2,
           rotationSpeed: Math.random() * 2 - 1,
           angle: Math.random() * 360
@@ -116,7 +116,7 @@
     align-items: center;
     z-index: 9999;
     animation: jumpscareIn 0.4s ease-out forwards;
-    transform: scale(3); /* Start at 3x size */
+    transform: scale(5); /* Start at 3x size */
     user-select: none; /* Prevent the image from being selected */
   }
 
@@ -155,6 +155,19 @@
     <img
       class="floating-img"
       src="/bdayboi.png"
+      alt="space boi"
+      style="
+        transform:
+          translate3d({img.x}px, {img.y}px, {img.z}px)
+          rotateY({img.angle}deg);
+        width: {img.size}px;
+      "
+    />
+
+
+    <img
+      class="floating-img"
+      src="/bdayboi3.png"
       alt="space boi"
       style="
         transform:
