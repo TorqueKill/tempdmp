@@ -152,7 +152,7 @@
 
 <div class="scene" on:click={handleClick}>
   {#each images as img (img)}
-    <img
+    <!-- <img
       class="floating-img"
       src="/bdayboi.png"
       alt="space boi"
@@ -162,7 +162,7 @@
           rotateY({img.angle}deg);
         width: {img.size}px;
       "
-    />
+    /> -->
 
 
     <img
